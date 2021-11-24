@@ -1,0 +1,21 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: api-simian
+    profiles:
+        active: dev
+    data:
+        mongodb:
+            uri: mongodb://localhost:27017/automec-finder
+
+#    kafka:
+#        bootstrap-servers: localhost:9092
+#        listener:
+#            concurrency: 1
+#        consumer:
+#            topic: "dna"
+#            auto-offset-reset: earliest
+#            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
