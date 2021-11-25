@@ -14,5 +14,4 @@ public class UserValidationException extends Exception {
     public UserValidationException(List<String> errorMessages) {
         this(emptyIfNull(errorMessages).stream().collect(joining(", ")));
     }
-
 }

@@ -21,7 +21,7 @@ public class UserPreNewDTO {
     private String email;
 
     @NotEmpty(message = "User password is required")
-    private String password;
+    private String password; // chega criptografada
 
     public User toDomain() {
         return User.builder()

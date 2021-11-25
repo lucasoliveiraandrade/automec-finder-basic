@@ -36,6 +36,8 @@ public class UserController {
     @PostMapping(value = "/pre-new", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createPreNew(@RequestBody @Valid UserPreNewDTO userPreNewDTO) throws UserValidationException {
 
+        log.info("User pre new received: ", userPreNewDTO);
+
         User user = userPreNewDTO.toDomain();
 
         userValidator.validatePreNew(user);

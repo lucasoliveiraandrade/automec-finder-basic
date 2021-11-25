@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.automecfinder.basic.enums.ValidationMessages.EMAIL_ALREADY_USED;
+import static com.automecfinder.basic.enums.ValidationMessages.USER_CAN_NOT_BE_NULL;
 import static java.util.Objects.isNull;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
@@ -25,14 +27,14 @@ public class UserValidator {
         List<String> errorMessages = new ArrayList<>();
 
         if (isNull(user)) {
-            log.info("User can't be null");
-            errorMessages.add("User can't be null");
+            log.info(USER_CAN_NOT_BE_NULL.toString());
+            errorMessages.add(USER_CAN_NOT_BE_NULL.toString());
         }
 
         userUseCase.findByEmail(user.getEmail())
                 .ifPresent(u -> {
-                    log.info("Email already used");
-                    errorMessages.add("Email already used");
+                    log.info(EMAIL_ALREADY_USED.toString());
+                    errorMessages.add(EMAIL_ALREADY_USED.toString());
                 });
 
 
