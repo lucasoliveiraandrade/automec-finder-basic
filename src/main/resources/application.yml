@@ -1,14 +1,14 @@
 server:
-    port: 8080
+  port: 8081
 
 spring:
-    application:
-        name: api-simian
-    profiles:
-        active: dev
-    data:
-        mongodb:
-            uri: mongodb://localhost:27017/automec-finder
+  application:
+    name: automec-finder
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/automec-finder
 
 #    kafka:
 #        bootstrap-servers: localhost:9092

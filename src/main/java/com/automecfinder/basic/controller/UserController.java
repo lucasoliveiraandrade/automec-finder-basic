@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api/v1/users")
-@Api(value = "/api/v1/simian", consumes = APPLICATION_JSON_VALUE)
+@Api(value = "/api/v1/users", consumes = APPLICATION_JSON_VALUE)
 public class UserController {
 
     private UserUseCase userUseCase;
@@ -42,9 +42,8 @@ public class UserController {
 
         userValidator.validatePreNew(user);
 
-        return userUseCase.save(user).isPresent()
+        return userUseCase.savePreNew(user).isPresent()
                 ? new ResponseEntity<>(CREATED)
                 : new ResponseEntity<>(BAD_REQUEST);
     }
-
 }

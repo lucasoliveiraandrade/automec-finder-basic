@@ -1,5 +1,6 @@
 package com.automecfinder.basic.model;
 
+import com.automecfinder.basic.enums.UserStatus;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -66,6 +67,10 @@ public class User implements UserDetails {
     private String firstPhoneNumber;
 
     private String secondPhoneNumber;
+
+    private UserStatus status;
+
+    private String activationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.automecfinder.basic.enums.ValidationMessages.EMAIL_ALREADY_USED;
-import static com.automecfinder.basic.enums.ValidationMessages.USER_CAN_NOT_BE_NULL;
+import static com.automecfinder.basic.enums.UserStatus.*;
+import static com.automecfinder.basic.enums.ValidationMessages.*;
 import static java.util.Objects.isNull;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
@@ -32,11 +32,18 @@ public class UserValidator {
         }
 
         userUseCase.findByEmail(user.getEmail())
-                .ifPresent(u -> {
-                    log.info(EMAIL_ALREADY_USED.toString());
-                    errorMessages.add(EMAIL_ALREADY_USED.toString());
+                .ifPresent(userDB -> {
+                    if (userDB.getStatus().equals(PENDING)) {
+                        log.info(EMAIL_ALREADY_USED_STATUS_PENDING.toString());
+                        errorMessages.add(EMAIL_ALREADY_USED_STATUS_PENDING.toString());
+                    } else if (userDB.getStatus().equals(ACTIVE)) {
+                        log.info(EMAIL_ALREADY_USED_STATUS_ACTIVE.toString());
+                        errorMessages.add(EMAIL_ALREADY_USED_STATUS_ACTIVE.toString());
+                    } else if (userDB.getStatus().equals(INACTIVE)) {
+                        log.info(EMAIL_ALREADY_USED_STATUS_INACTIVE.toString());
+                        errorMessages.add(EMAIL_ALREADY_USED_STATUS_INACTIVE.toString());
+                    }
                 });
-
 
         if (isNotEmpty(errorMessages)) {
             throw new UserValidationException(errorMessages);

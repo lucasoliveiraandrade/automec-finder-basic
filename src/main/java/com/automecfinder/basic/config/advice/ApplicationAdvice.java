@@ -15,4 +15,12 @@ public class ApplicationAdvice {
     public ErrorResponseDTO handleUserValidationException(UserValidationException e) {
         return new ErrorResponseDTO(e.getMessage());
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponseDTO handleServerErrorException(Exception ex) {
+        return new ErrorResponseDTO(ex.getMessage());
+    }
+
+
 }
