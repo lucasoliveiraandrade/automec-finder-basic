@@ -1,5 +1,6 @@
 package com.automecfinder.basic.controller;
 
+import com.automecfinder.basic.exception.ActivationTokenNotFoundException;
 import com.automecfinder.basic.exception.UserValidationException;
 import com.automecfinder.basic.model.User;
 import com.automecfinder.basic.model.dto.UserPreNewDTO;
@@ -15,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -46,4 +47,15 @@ public class UserController {
                 ? new ResponseEntity<>(CREATED)
                 : new ResponseEntity<>(BAD_REQUEST);
     }
+
+    @ApiOperation(value = "Active user")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "User active")})
+    @ResponseStatus(OK)
+    @GetMapping(value = "/active/{token}")
+    public ResponseEntity<?> activeUser(@NotEmpty @PathVariable(value = "token") String token) throws ActivationTokenNotFoundException {
+        userUseCase.activeUser(token);
+        return new ResponseEntity<>(OK);
+    }
+
+
 }

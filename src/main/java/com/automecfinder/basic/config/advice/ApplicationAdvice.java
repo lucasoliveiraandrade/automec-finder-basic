@@ -1,5 +1,6 @@
 package com.automecfinder.basic.config.advice;
 
+import com.automecfinder.basic.exception.ActivationTokenNotFoundException;
 import com.automecfinder.basic.exception.UserValidationException;
 import com.automecfinder.basic.model.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,15 @@ public class ApplicationAdvice {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponseDTO handleServerErrorException(Exception ex) {
-        return new ErrorResponseDTO(ex.getMessage());
+    public ErrorResponseDTO handleServerErrorException(Exception e) {
+        return new ErrorResponseDTO(e.getMessage());
+    }
+
+
+    @ExceptionHandler(ActivationTokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDTO handleActivationTokenNotFoundException(ActivationTokenNotFoundException e) {
+        return new ErrorResponseDTO(e.getMessage());
     }
 
 

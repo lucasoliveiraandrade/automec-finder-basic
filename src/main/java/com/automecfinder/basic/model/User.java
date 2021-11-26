@@ -57,8 +57,6 @@ public class User implements UserDetails {
 
     private String profilePicture;
 
-    private LocalDate firstAccess;
-
     private LocalDate lastAccess;
 
     @NotEmpty(message = "User roles are required")
@@ -71,6 +69,8 @@ public class User implements UserDetails {
     private UserStatus status;
 
     private String activationToken;
+
+    private LocalDate activationAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,5 +1,6 @@
 package com.automecfinder.basic.usercase;
 
+import com.automecfinder.basic.exception.ActivationTokenNotFoundException;
 import com.automecfinder.basic.model.User;
 import com.automecfinder.basic.repository.UserRepository;
 import com.automecfinder.basic.util.ActivationTokenUtil;
@@ -10,9 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
+import static com.automecfinder.basic.enums.UserStatus.ACTIVE;
 import static com.automecfinder.basic.enums.UserStatus.PENDING;
+import static com.automecfinder.basic.enums.ValidationMessages.ACTIVATION_TOKEN_NOT_FOUND;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.*;
@@ -40,4 +44,15 @@ public class UserUseCase implements UserDetailsService {
         return ofNullable(userRepository.save(user));
     }
 
+    public void activeUser(String token) throws ActivationTokenNotFoundException {
+        ofNullable(userRepository.findByActivationToken(token))
+                .filter(User::isEnabled)
+                .map(user -> {
+                    user.setActivationAt(LocalDate.now());
+                    user.setActivationToken(null);
+                    user.setStatus(ACTIVE);
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new ActivationTokenNotFoundException(ACTIVATION_TOKEN_NOT_FOUND.toString()));
+    }
 }
