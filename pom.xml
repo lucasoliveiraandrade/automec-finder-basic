@@ -27,6 +27,7 @@
         <lombok.version>1.18.16</lombok.version>
         <jacoco-plugin.version>0.8.6</jacoco-plugin.version>
         <spring-security-test.version>5.1.2.RELEASE</spring-security-test.version>
+        <spring-kafka-test.version>2.8.0</spring-kafka-test.version>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +81,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!-- kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <version>${spring-kafka-test.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- util -->

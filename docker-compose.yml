@@ -1,0 +1,13 @@
+kafka:
+  image: spotify/kafka
+  ports:
+    - "2181:2181"
+    - "9092:9092"
+  environment:
+    ADVERTISED_HOST: localhost
+    ADVERTISED_PORT: 9092
+    CONSUMER_THREADS: 1
+    TOPICS: user
+    ZK_CONNECT: kafka7zookeeper:2181/root/path
+    GROUP_ID: automec-finder
+    NUM_PARTITIONS: 100

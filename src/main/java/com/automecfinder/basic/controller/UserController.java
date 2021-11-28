@@ -1,7 +1,6 @@
 package com.automecfinder.basic.controller;
 
 import com.automecfinder.basic.exception.ActivationTokenNotFoundException;
-import com.automecfinder.basic.exception.UserValidationException;
 import com.automecfinder.basic.model.User;
 import com.automecfinder.basic.model.dto.UserPreNewDTO;
 import com.automecfinder.basic.usercase.UserUseCase;
@@ -18,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -35,7 +35,7 @@ public class UserController {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User created")})
     @ResponseStatus(CREATED)
     @PostMapping(value = "/pre-new", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createPreNew(@RequestBody @Valid UserPreNewDTO userPreNewDTO) throws UserValidationException {
+    public ResponseEntity<?> createPreNew(@RequestBody @Valid UserPreNewDTO userPreNewDTO) throws Exception {
 
         log.info("User pre new received: ", userPreNewDTO);
 
@@ -43,9 +43,9 @@ public class UserController {
 
         userValidator.validatePreNew(user);
 
-        return userUseCase.savePreNew(user).isPresent()
-                ? new ResponseEntity<>(CREATED)
-                : new ResponseEntity<>(BAD_REQUEST);
+        userUseCase.savePreNew(user);
+
+        return new ResponseEntity<>(CREATED);
     }
 
     @ApiOperation(value = "Active user")
