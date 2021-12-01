@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: automec-finder
+    name: automec-finder-basic
 
   profiles:
     active: dev
