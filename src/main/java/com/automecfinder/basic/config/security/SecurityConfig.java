@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.automecfinder.basic.enums.UserRoles.ADMIN;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("lucas.andrade999@gmail.com")
                 .password(passwordEncoder.encode("lucas"))
-                .roles("ADMIN");
+                .roles(ADMIN.name());
 
         // validando usuarios carregados da base dados
         auth.userDetailsService(userUseCase)

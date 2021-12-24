@@ -11,3 +11,12 @@ kafka:
     ZK_CONNECT: kafka7zookeeper:2181/root/path
     GROUP_ID: automec-finder
     NUM_PARTITIONS: 100
+
+mongo:
+  image: mongo
+  restart: unless-stopped
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: example
+  ports:
+    - "27017:27017"
